@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>U&I Studio — מחלקת העיצוב החיצונית שלך</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #faf8f4;
+    --bg-alt: #f1ede5;
+    --ink: #211f1c;
+    --ink-dim: #746e66;
+    --purple: #8b4fd6;
+    --orange: #ff7a2e;
+    --gold: #8b4fd6;
+    --gold-dim: #6a3aa8;
+    --line: rgba(139,79,214,0.22);
+    --card: #ffffff;
+    --grad: linear-gradient(100deg, var(--orange) 0%, var(--purple) 100%);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Heebo', sans-serif;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{
+    font-family:'Heebo', sans-serif;
+    font-weight:800;
+    letter-spacing:0;
+    text-wrap:balance;
+  }
+  p{text-wrap:pretty;}
+  .grad-text{
+    background:var(--grad);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    background-size:200% auto;
+    animation:gradShift 6s ease-in-out infinite;
+  }
+  @keyframes gradShift{
+    0%,100%{background-position:0% center;}
+    50%{background-position:100% center;}
+  }
+  a{color:inherit; text-decoration:none;}
+  .wrap{max-width:1320px; margin:0 auto; padding:0 32px;}
+
+  /* icons */
+  .ico{width:20px; height:20px; flex-shrink:0; display:inline-block;}
+  .ico-lg{width:30px; height:30px;}
+  .ico-sm{width:16px; height:16px;}
+
+  /* Registration / crop-mark motif */
+  .mark{
+    position:relative;
+  }
+  .mark::before, .mark::after{
+    content:"";
+    position:absolute;
+    width:14px; height:14px;
+    border:1px solid var(--gold);
+    opacity:0.55;
+  }
+  .mark::before{top:-8px; right:-8px; border-left:none; border-bottom:none;}
+  .mark::after{bottom:-8px; left:-8px; border-right:none; border-top:none;}
+
+  .logo-badge{
+    display:inline-flex; align-items:center;
+    filter:drop-shadow(0 0 14px rgba(139,79,214,0.25));
+  }
+  .logo-badge img{height:26px; display:block;}
+  .amp-watermark{
+    position:absolute; top:50%; right:-4%; transform:translateY(-50%);
+    font-family:'Heebo',sans-serif; font-size:min(28vw,360px); line-height:1;
+    color:#fff; opacity:0.14; pointer-events:none; user-select:none; z-index:1;
+  }
+  .footer-logo{display:flex; align-items:center; justify-content:center; gap:14px; margin-bottom:14px;}
+  .footer-logo .logo-badge img{height:22px;}
+
+  /* CTA wrapper used between sections */
+  .section-cta{margin-top:40px; display:flex; justify-content:center;}
+
+  /* HERO */
+  .hero{
+    min-height:100vh;
+    display:flex; align-items:center;
+    position:relative;
+    padding-top:120px; padding-bottom:80px;
+    background:var(--grad);
+    background-size:200% 200%;
+    animation:heroGradShift 14s ease-in-out infinite;
+    overflow:hidden;
+  }
+  @keyframes heroGradShift{
+    0%,100%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+  }
+  .blob{
+    position:absolute; border-radius:50%; filter:blur(90px); pointer-events:none; z-index:0;
+    background:#fff; mix-blend-mode:normal;
+  }
+  .blob-1{width:520px; height:520px; top:-160px; left:-120px; opacity:0.14; animation:float1 14s ease-in-out infinite;}
+  .blob-2{width:420px; height:420px; bottom:-140px; right:-80px; opacity:0.12; animation:float2 16s ease-in-out infinite;}
+  .blob-3{width:340px; height:340px; top:30%; right:18%; opacity:0.08; animation:float3 12s ease-in-out infinite;}
+  @keyframes float1{0%,100%{transform:translate(0,0);} 50%{transform:translate(60px,50px);}}
+  @keyframes float2{0%,100%{transform:translate(0,0);} 50%{transform:translate(-50px,-40px);}}
+  @keyframes float3{0%,100%{transform:translate(0,0) scale(1);} 50%{transform:translate(-30px,40px) scale(1.15);}}
+  .hero-grid{
+    position:absolute; inset:0; pointer-events:none; z-index:1;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.16) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.16) 1px, transparent 1px);
+    background-size:64px 64px;
+    mask-image:linear-gradient(to bottom, rgba(0,0,0,0.5), transparent 75%);
+    opacity:0.5;
+  }
+  .hero-inner{position:relative; z-index:2; text-align:center; display:flex; flex-direction:column; align-items:center;}
+  .hero-logo{height:clamp(60px,9vw,120px); width:auto; margin-bottom:32px;}
+  .hero h1{
+    font-size:clamp(40px, 6.4vw, 84px);
+    line-height:1.06;
+    max-width:900px;
+    color:#fff;
+  }
+  .hero .grad-text{
+    background:none; -webkit-text-fill-color:#fff; color:#fff; animation:none;
+  }
+  .hero p.lead{
+    margin-top:28px; font-size:19px; line-height:1.7;
+    color:rgba(255,255,255,0.88); max-width:560px;
+  }
+  .hero-actions{display:flex; gap:16px; margin-top:44px; flex-wrap:wrap; justify-content:center;}
+  .btn-primary, .btn-ghost{
+    padding:16px 34px; font-size:15.5px; border-radius:8px; font-weight:700;
+    display:inline-flex; align-items:center; gap:10px;
+    transition:all 0.3s ease;
+  }
+  .btn-primary{
+    background:var(--grad); background-size:200% auto; background-position:0% center;
+    color:#fff;
+  }
+  .btn-primary:hover{background-position:100% center; transform:translateY(-2px); box-shadow:0 10px 30px rgba(255,122,46,0.25);}
+  .btn-ghost{border:1px solid rgba(33,31,28,0.2); color:var(--ink); border-radius:8px;}
+  .btn-ghost:hover{border-color:var(--purple); transform:translateY(-2px);}
+  .hero .btn-primary{
+    background:#fff; color:var(--ink); box-shadow:0 10px 30px rgba(33,31,28,0.18);
+  }
+  .hero .btn-primary:hover{background:#fff; transform:translateY(-2px); box-shadow:0 14px 34px rgba(33,31,28,0.28);}
+  .hero .btn-ghost{border-color:rgba(255,255,255,0.55); color:#fff;}
+  .hero .btn-ghost:hover{border-color:#fff; background:rgba(255,255,255,0.12); transform:translateY(-2px);}
+
+  .hero-tags{
+    margin-top:64px; display:flex; gap:40px; flex-wrap:wrap; justify-content:center;
+    padding-top:28px; border-top:1px solid rgba(255,255,255,0.3);
+    color:rgba(255,255,255,0.75); font-size:14px;
+  }
+  .tag-item{display:flex; flex-direction:column; align-items:center; gap:10px; max-width:190px;}
+  .tag-item .tag-icon{color:#fff;}
+  .hero-tags b{color:#fff; font-family:'Heebo',sans-serif; font-size:15px; display:block; margin-bottom:4px;}
+
+  /* SECTION generic */
+  section{padding:120px 0; position:relative;}
+  .section-head{max-width:700px; margin:0 auto 64px; text-align:center;}
+  .section-head h2{font-size:clamp(30px,4vw,46px); line-height:1.2;}
+  .section-head p{margin-top:18px; color:var(--ink-dim); font-size:17px; line-height:1.7;}
+
+  /* ABOUT (short) */
+  .about{
+    background:
+      radial-gradient(ellipse 800px 500px at 15% 10%, rgba(139,79,214,0.14), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 90% 90%, rgba(255,122,46,0.14), transparent 60%),
+      var(--bg-alt);
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    padding:88px 0;
+    text-align:center;
+  }
+  .about .section-head{margin-bottom:0;}
+
+  /* PACKAGES */
+  #packages{
+    background:
+      linear-gradient(120deg, rgba(255,122,46,0.32) 0%, rgba(139,79,214,0.36) 100%),
+      var(--bg-alt);
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  }
+  .packages-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:26px;}
+  .pkg{
+    background:var(--card); border:1px solid var(--line); padding:40px 32px;
+    display:flex; flex-direction:column; align-items:center; text-align:center;
+    position:relative; border-radius:20px;
+    transition:border-color 0.25s ease, transform 0.25s ease, box-shadow 0.3s ease, background 0.3s ease;
+    box-shadow:0 10px 30px rgba(33,31,28,0.08);
+  }
+  .pkg:hover{border-color:transparent; transform:translateY(-6px); box-shadow:0 18px 40px rgba(33,31,28,0.2); background:var(--grad);}
+  .pkg.featured{
+    border:2px solid transparent;
+    background:
+      linear-gradient(var(--card), var(--card)) padding-box,
+      var(--grad) border-box;
+  }
+  .pkg.featured:hover{background:var(--grad);}
+  .featured-badge{
+    position:absolute; top:-15px; right:50%; transform:translateX(50%);
+    background:var(--grad); color:#fff; font-size:12px; padding:5px 16px; font-weight:700; border-radius:20px;
+    display:inline-flex; align-items:center; gap:6px; white-space:nowrap;
+  }
+  .featured-badge svg{color:#fff;}
+  .pkg .tier{font-family:'Heebo',sans-serif; font-size:24px; margin-bottom:8px; transition:color 0.25s ease;}
+  .pkg .price{font-size:15px; margin-bottom:26px; font-weight:700; transition:color 0.25s ease;}
+  .pkg ul{display:flex; flex-direction:column; align-items:flex-start; gap:12px; flex:1;}
+  .pkg ul li{font-size:14.5px; color:var(--ink-dim); display:flex; align-items:center; gap:10px; transition:color 0.25s ease;}
+  .pkg ul li svg{color:var(--gold-dim); transition:color 0.25s ease;}
+  .pkg:hover .tier,
+  .pkg:hover .price,
+  .pkg:hover ul li{color:#fff;}
+  .pkg:hover .price{background:none; -webkit-text-fill-color:#fff;}
+  .pkg:hover ul li svg{color:#fff;}
+  @media(max-width:900px){ .packages-grid{grid-template-columns:1fr; gap:18px;} }
+
+  /* SINGLE PROJECT */
+  .single-project .section-head{margin-bottom:0;}
+  .single-project .cta-buttons{margin-top:36px; display:flex; justify-content:center;}
+
+  /* SERVICES */
+  .services{
+    background:var(--bg);
+  }
+  .services-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:24px;}
+  .service-card{
+    background:var(--card); border:1px solid var(--line); border-radius:20px; padding:32px 26px;
+    box-shadow:0 8px 24px rgba(33,31,28,0.06);
+    transition:transform 0.25s ease, box-shadow 0.3s ease, border-color 0.25s ease;
+  }
+  .service-card:hover{transform:translateY(-6px); box-shadow:0 18px 36px rgba(33,31,28,0.14); border-color:var(--gold-dim);}
+  .service-icon{
+    width:52px; height:52px; border-radius:14px; margin-bottom:20px;
+    display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(135deg, rgba(255,122,46,0.16), rgba(139,79,214,0.16));
+    color:var(--gold-dim);
+  }
+  .service-card h3{font-size:19px; margin-bottom:10px;}
+  .service-card p{color:var(--ink-dim); font-size:14.5px; line-height:1.6;}
+  @media(max-width:900px){ .services-grid{grid-template-columns:1fr 1fr; gap:18px;} }
+  @media(max-width:560px){ .services-grid{grid-template-columns:1fr;} }
+
+  /* PROCESS (dual-track split) */
+  .process{padding:0; background:var(--bg);}
+  .process .wrap{padding-top:120px; padding-bottom:0;}
+  .process-split{display:grid; grid-template-columns:1fr 1fr; align-items:stretch; margin-top:64px;}
+  .process-col{transition:background 0.4s ease, color 0.4s ease;}
+  .process-col-inner{padding:64px 48px 72px; display:flex; flex-direction:column; gap:22px;}
+  .process-col-head{display:flex; align-items:center; gap:14px; margin-bottom:12px;}
+  .process-col-icon{
+    width:44px; height:44px; border-radius:50%; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    transition:background 0.4s ease, border-color 0.4s ease, color 0.4s ease;
+  }
+  .process-col-head h3{margin:0; font-size:24px;}
+  .process-step{
+    position:relative; overflow:hidden; border-radius:18px;
+    padding:36px 32px; min-height:180px;
+    display:flex; flex-direction:column; justify-content:center;
+    transition:background 0.4s ease, border-color 0.4s ease;
+  }
+  .process-step::before{
+    content:attr(data-num); position:absolute; top:-0.1em; inset-inline-end:20px;
+    font-family:'Heebo',sans-serif; font-weight:800; font-size:5.5rem; line-height:1;
+    opacity:0.12; pointer-events:none; transition:opacity 0.4s ease, color 0.4s ease;
+  }
+  .process-step h4{font-size:20px; margin-bottom:10px; position:relative;}
+  .process-step p{font-size:15px; margin:0; position:relative; max-width:38ch; transition:color 0.4s ease;}
+
+  .process-col--dark{background:var(--ink); color:#fff;}
+  .process-col--dark .process-step{background:#2b2925; border:1px solid rgba(255,255,255,0.1);}
+  .process-col--dark .process-step p{color:rgba(255,255,255,0.65);}
+  .process-col--dark .process-step::before{color:var(--orange);}
+  .process-col--dark .process-col-icon{background:#2b2925; border:1px solid rgba(255,255,255,0.14); color:var(--orange);}
+
+  .process-col--light{background:var(--bg-alt); color:var(--ink);}
+  .process-col--light .process-step{background:var(--card); border:1px solid var(--line);}
+  .process-col--light .process-step p{color:var(--ink-dim);}
+  .process-col--light .process-step::before{color:var(--purple);}
+  .process-col--light .process-col-icon{background:var(--card); border:1px solid var(--line); color:var(--purple);}
+
+  .process-split.swap .process-col--dark{background:var(--bg-alt); color:var(--ink);}
+  .process-split.swap .process-col--dark .process-step{background:var(--card); border:1px solid var(--line);}
+  .process-split.swap .process-col--dark .process-step p{color:var(--ink-dim);}
+
+  .process-split.swap .process-col--light{background:var(--ink); color:#fff;}
+  .process-split.swap .process-col--light .process-step{background:#2b2925; border:1px solid rgba(255,255,255,0.1);}
+  .process-split.swap .process-col--light .process-step p{color:rgba(255,255,255,0.65);}
+
+  @media(max-width:900px){
+    .process-split{grid-template-columns:1fr;}
+    .process-col-inner{padding:48px 28px 56px;}
+  }
+  @media(max-width:560px){
+    .process-step{padding:28px 24px; min-height:160px;}
+    .process-step::before{font-size:3.8rem;}
+  }
+
+  /* WHY US */
+  .why-us{
+    background:
+      radial-gradient(ellipse 650px 400px at 90% 0%, rgba(255,122,46,0.14), transparent 60%),
+      radial-gradient(ellipse 600px 400px at 5% 100%, rgba(139,79,214,0.14), transparent 60%),
+      var(--bg-alt);
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  }
+  .why-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:24px;}
+  .why-card{
+    text-align:center; padding:34px 24px; border-radius:20px; border:1px solid var(--line);
+    background:var(--card); box-shadow:0 8px 24px rgba(33,31,28,0.06);
+    transition:transform 0.25s ease, box-shadow 0.3s ease, border-color 0.25s ease;
+  }
+  .why-card:hover{transform:translateY(-6px); box-shadow:0 18px 36px rgba(33,31,28,0.14); border-color:var(--gold-dim);}
+  .why-icon{
+    width:50px; height:50px; border-radius:50%; margin:0 auto 18px;
+    display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(135deg, rgba(255,122,46,0.16), rgba(139,79,214,0.16));
+    color:var(--gold-dim);
+  }
+  .why-card h3{font-size:17px; margin-bottom:8px;}
+  .why-card p{color:var(--ink-dim); font-size:14px; line-height:1.6;}
+  @media(max-width:900px){ .why-grid{grid-template-columns:1fr 1fr; gap:18px;} }
+  @media(max-width:560px){ .why-grid{grid-template-columns:1fr;} }
+
+  /* CTA FINAL */
+  .final-cta{
+    padding:140px 0;
+    background:
+      linear-gradient(135deg, rgba(255,122,46,0.36) 0%, rgba(139,79,214,0.4) 100%),
+      var(--bg-alt);
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  }
+  .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:start;}
+  .contact-info h2{font-size:clamp(32px,5vw,50px); margin-bottom:20px;}
+  .contact-info p{color:var(--ink-dim); font-size:17px; margin-bottom:36px;}
+  .cta-buttons{display:flex; gap:16px; justify-content:center; flex-wrap:wrap;}
+  .contact-info .cta-buttons{justify-content:flex-start; margin-bottom:44px;}
+  .contact-lines{margin-top:56px; display:flex; gap:44px; justify-content:center; flex-wrap:wrap; color:var(--ink-dim); font-size:15px;}
+  .contact-info .contact-lines{justify-content:flex-start; margin-top:0;}
+  .ci-item{display:flex; align-items:center; gap:12px;}
+  .ci-item svg{color:var(--gold-dim);}
+  .contact-lines b{color:var(--ink); display:block; font-family:'Heebo',sans-serif; font-size:16px; margin-bottom:4px;}
+
+  .contact-form{
+    background:var(--card); border:1px solid var(--line); border-radius:20px; padding:36px;
+    box-shadow:0 20px 50px -20px rgba(33,31,28,0.3);
+  }
+  .form-row{margin-bottom:18px; display:flex; flex-direction:column; gap:6px;}
+  .form-row label{font-size:14px; font-weight:700; color:var(--ink-dim);}
+  .form-row input, .form-row textarea{
+    font-family:'Heebo',sans-serif; font-size:15px; padding:12px 14px;
+    border-radius:10px; border:1px solid var(--line); background:var(--bg-alt); color:var(--ink);
+    resize:vertical; transition:border-color 0.2s ease, background 0.2s ease;
+  }
+  .form-row input::placeholder, .form-row textarea::placeholder{color:#a39c92;}
+  .form-row input:focus, .form-row textarea:focus{outline:none; border-color:var(--gold); background:#fff;}
+  .form-submit{width:100%; justify-content:center; border:none; cursor:pointer; font-family:'Heebo',sans-serif;}
+  .form-submit:disabled{opacity:0.7; cursor:default;}
+  .form-status{margin-top:14px; font-size:14.5px; font-weight:600; color:var(--gold-dim); min-height:1.2em;}
+
+  @media(max-width:900px){
+    .contact-grid{grid-template-columns:1fr;}
+    .contact-info{text-align:center;}
+    .contact-info .cta-buttons, .contact-info .contact-lines{justify-content:center;}
+  }
+
+  footer{
+    border-top:1px solid var(--line); padding:36px 0; text-align:center;
+    color:var(--ink-dim); font-size:13px;
+  }
+
+  .reveal{opacity:0; transform:translateY(24px); transition:opacity 0.7s ease, transform 0.7s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  /* BACK TO TOP */
+  .back-to-top{
+    position:fixed; bottom:32px; right:32px; z-index:60;
+    width:52px; height:52px; border-radius:50%;
+    background:var(--grad); color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 8px 24px rgba(33,31,28,0.25);
+    opacity:0; transform:translateY(12px); pointer-events:none;
+    transition:opacity 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .back-to-top.visible{opacity:1; transform:translateY(0); pointer-events:auto;}
+  .back-to-top:hover{box-shadow:0 12px 30px rgba(33,31,28,0.35); transform:translateY(-3px);}
+  @media(max-width:600px){ .back-to-top{width:46px; height:46px; bottom:20px; right:20px;} }
+</style>
+</head>
+<body>
+
+<svg style="display:none">
+  <symbol id="ico-palette" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 3a9 9 0 1 0 0 18c1.4 0 2.1-.9 2.1-1.9 0-.7-.4-1.1-.4-1.8 0-1 .9-1.5 1.9-1.5h1.7A3.7 3.7 0 0 0 21 12c0-5-4-9-9-9Z"/>
+    <circle cx="7.2" cy="10.8" r="1.1" fill="currentColor" stroke="none"/>
+    <circle cx="10.5" cy="7" r="1.1" fill="currentColor" stroke="none"/>
+    <circle cx="14.8" cy="7.6" r="1.1" fill="currentColor" stroke="none"/>
+    <circle cx="17" cy="11.2" r="1.1" fill="currentColor" stroke="none"/>
+  </symbol>
+  <symbol id="ico-monitor" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="4.5" width="18" height="12.5" rx="2"/>
+    <path d="M8.5 21h7M12 17v4"/>
+  </symbol>
+  <symbol id="ico-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4.5 4.5v5.5h5.5"/>
+    <path d="M19.5 19.5V14h-5.5"/>
+    <path d="M5.6 9A7.5 7.5 0 0 1 19 10M18.4 15a7.5 7.5 0 0 1-13.4-1"/>
+  </symbol>
+  <symbol id="ico-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4.5 12.5l5 5L19.5 7"/>
+  </symbol>
+  <symbol id="ico-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M7 3.5h2.5L11 8l-2 1.8a11.5 11.5 0 0 0 5.2 5.2L16 13l4.5 1.5V17a2 2 0 0 1-2 2C11 19 5 13 5 5.5a2 2 0 0 1 2-2Z"/>
+  </symbol>
+  <symbol id="ico-whatsapp" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+    <path d="M12 3a9 9 0 0 0-7.7 13.6L3 21l4.6-1.2A9 9 0 1 0 12 3Zm0 1.8a7.2 7.2 0 1 1-3.9 13.3l-.3-.2-2.7.7.7-2.6-.2-.3A7.2 7.2 0 0 1 12 4.8Zm-3.6 3.7c-.2 0-.5 0-.7.3-.2.3-.9.9-.9 2.1 0 1.2.9 2.4 1 2.6.1.1 1.8 2.9 4.4 3.9 2.2.8 2.6.7 3.1.6.5-.1 1.6-.6 1.8-1.3.2-.6.2-1.1.1-1.3-.1-.1-.3-.2-.6-.4-.3-.2-1.6-.8-1.9-.9-.3-.1-.4-.1-.6.1-.2.3-.7.9-.8 1-.1.2-.3.2-.5.1-.3-.2-1.2-.5-2.2-1.4-.8-.7-1.4-1.7-1.6-1.9-.1-.3 0-.4.1-.6l.4-.5c.1-.2.2-.3.2-.5.1-.2 0-.4 0-.5-.1-.1-.6-1.5-.8-2-.2-.5-.4-.4-.6-.4Z"/>
+  </symbol>
+  <symbol id="ico-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="8.5"/>
+    <path d="M12 7.5V12l3 2"/>
+  </symbol>
+  <symbol id="ico-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3.5" y="5" width="17" height="15" rx="2.2"/>
+    <path d="M3.5 9.5h17M8 3v3.3M16 3v3.3"/>
+    <path d="M8.3 14l1.8 1.8L15.7 12"/>
+  </symbol>
+  <symbol id="ico-star" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+    <path d="M12 2.8l2.6 5.6 6.1.6-4.6 4.1 1.4 6-5.5-3.2-5.5 3.2 1.4-6-4.6-4.1 6.1-.6Z"/>
+  </symbol>
+  <symbol id="ico-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="5.5" width="18" height="13" rx="2"/>
+    <path d="M4 7.5l8 5.5 8-5.5"/>
+  </symbol>
+  <symbol id="ico-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 19V5M6 11l6-6 6 6"/>
+  </symbol>
+  <symbol id="ico-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/>
+    <circle cx="12" cy="12" r="5"/>
+    <circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/>
+  </symbol>
+  <symbol id="ico-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="11" cy="11" r="7"/>
+    <path d="M21 21l-4.3-4.3"/>
+  </symbol>
+  <symbol id="ico-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/>
+    <circle cx="12" cy="12" r="3"/>
+  </symbol>
+  <symbol id="ico-people" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="8" r="4"/>
+    <path d="M4 20c0-4 4-6 8-6s8 2 8 6"/>
+  </symbol>
+  <symbol id="ico-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 3L3 10.5l7 2.5 2.5 7L21 3Z"/>
+    <path d="M12.5 13.5L21 3"/>
+  </symbol>
+</svg>
+
+<a href="#" class="back-to-top" id="backToTop" aria-label="חזרה למעלה"><svg class="ico"><use href="#ico-arrow-up"></use></svg></a>
+
+<section class="hero">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div class="hero-grid"></div>
+  <div class="amp-watermark">&amp;</div>
+  <div class="wrap hero-inner">
+    <img src="assets/logo_hero.png" alt="U&I Studio" class="hero-logo">
+    <h1>רוצים עוד זמן?</h1>
+    <p class="lead">סטודיו U&I כאן בשביל לפנות לכם זמן<br>ולתת את המענה העיצובי הגבוה ביותר.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary"><svg class="ico"><use href="#ico-calendar"></use></svg>לקביעת שיחת היכרות</a>
+      <a href="#packages" class="btn-ghost">לצפייה בחבילות</a>
+    </div>
+    <div class="hero-tags">
+      <div class="tag-item">
+        <svg class="ico ico-lg tag-icon"><use href="#ico-palette"></use></svg>
+        <div><b>מיתוג ואריזה</b>עיצוב ויזואלי מלא</div>
+      </div>
+      <div class="tag-item">
+        <svg class="ico ico-lg tag-icon"><use href="#ico-monitor"></use></svg>
+        <div><b>UI/UX ואתרים</b>מסכים ומוצרים דיגיטליים</div>
+      </div>
+      <div class="tag-item">
+        <svg class="ico ico-lg tag-icon"><use href="#ico-refresh"></use></svg>
+        <div><b>ליווי שוטף</b>לא עוד עבודה חד-פעמית</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>שותף קבוע לעיצוב<br>לא עוד פרילנסר מזדמן</h2>
+      <p>מחלקת העיצוב החיצונית של החברה שלכם: זמינה כל חודש, מכירה את המותג לעומק,<br>ועובדת לפי סדר עדיפויות משותף.</p>
+    </div>
+    <div class="section-cta reveal">
+      <a href="#contact" class="btn-primary"><svg class="ico"><use href="#ico-calendar"></use></svg>לקביעת שיחת היכרות</a>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>מה אנחנו <span class="grad-text">מביאים</span> לשולחן</h2>
+      <p>מהאסטרטגיה ועד לפיקסל האחרון: כל מה שצריך כדי לבנות מותג ומוצר דיגיטלי שעובדים.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-icon"><svg class="ico ico-lg"><use href="#ico-target"></use></svg></div>
+        <h3>אסטרטגיית מותג</h3>
+        <p>הגדרת מיצוב, ערכים וקהל יעד: הבסיס לכל החלטה עיצובית נכונה.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon"><svg class="ico ico-lg"><use href="#ico-palette"></use></svg></div>
+        <h3>זהות חזותית</h3>
+        <p>לוגו, פלטת צבעים, טיפוגרפיה ושפה גרפית עקבית לכל נקודות המגע.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon"><svg class="ico ico-lg"><use href="#ico-search"></use></svg></div>
+        <h3>אפיון UX</h3>
+        <p>מיפוי תהליכים וארכיטקטורת מידע ברורה, מבוססת על הבנת המשתמש.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon"><svg class="ico ico-lg"><use href="#ico-monitor"></use></svg></div>
+        <h3>עיצוב אתרים ו-UI</h3>
+        <p>ממשקים ואתרים מודרניים, מדויקים לכל מסך ולכל מכשיר.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="packages">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>שלוש רמות ליווי<br>לפי קצב הצמיחה</h2>
+      <p>כל חבילה כוללת שעות עיצוב חודשיות קבועות. אפשר לעבור רמה בכל רגע, בהתאם לעומס בפועל.</p>
+    </div>
+    <div class="packages-grid">
+      <div class="pkg reveal">
+        <div class="tier">Basic</div>
+        <div class="price grad-text">₪1,800–2,500 לחודש</div>
+        <ul>
+          <li><svg class="ico ico-sm"><use href="#ico-check"></use></svg>עד 10 שעות עיצוב בחודש</li>
+          <li><svg class="ico ico-sm"><use href="#ico-check"></use></svg>עדכוני עיצוב שוטפים</li>
+          <li><svg class="ico ico-sm"><use href="#ico-check"></use></svg>באנרים ומודעות</li>
+          <li><svg class="ico ico-sm"><use href="#ico-check"></use></svg>זמן תגובה של עד 48 שעות</li>
+        </ul>
+      </div>
+      <div class="pkg featured reveal">
+        <div class="featured-badge"><svg class="ico ico-sm"><use href="#ico-star"></use></svg>המומלץ</div>
+        <div class="tier">Growth</div>
+        <div class="price grad-text">₪3,500–5,000 לחודש</div>
+        <ul>
+          <li><svg class="ico ico-sm"><use href="#ico-check"></use></svg>20 שעות עיצוב בחודש</li>
+          <li><svg class="ico ico-sm"><use href="#ico-check"></use></svg>דפי נחיתה וחומרים שיווקיים</li>
+          <li><svg class="ico ico-sm"><use href="#ico-check"></use></svg>מצגות ומיתוג נלווה</li>
+          <li><svg class="ico ico-sm"><use href="#ico-check"></use></svg>זמן תגובה של עד 24 שעות</li>
+        </ul>
+      </div>
+      <div class="pkg reveal">
+        <div class="tier">Premium</div>
+        <div class="price grad-text">₪6,500–9,000 לחודש</div>
+        <ul>
+          <li><svg class="ico ico-sm"><use href="#ico-check"></use></svg>40 שעות עיצוב בחודש</li>
+          <li><svg class="ico ico-sm"><use href="#ico-check"></use></svg>כל צורכי העיצוב של החברה</li>
+          <li><svg class="ico ico-sm"><use href="#ico-check"></use></svg>זמינות גבוהה ותעדוף מיידי</li>
+          <li><svg class="ico ico-sm"><use href="#ico-check"></use></svg>ליווי צמוד לצוות השיווק</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="single-project">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>צריכים פרויקט בודד?</h2>
+      <p>לא בטוחים שריטיינר מתאים כרגע? אפשר להתחיל עם פרויקט בודד<br>מיתוג, דף נחיתה, מצגת או קמפיין.</p>
+    </div>
+    <div class="cta-buttons reveal">
+      <a href="#contact" class="btn-primary"><svg class="ico"><use href="#ico-calendar"></use></svg>לקביעת שיחת היכרות</a>
+    </div>
+    <div class="contact-lines reveal">
+      <div class="ci-item"><svg class="ico"><use href="#ico-phone"></use></svg><div><b>טלפון</b>058-321-2810</div></div>
+      <div class="ci-item"><svg class="ico"><use href="#ico-whatsapp"></use></svg><div><b>וואטסאפ</b>055-571-1589</div></div>
+      <div class="ci-item"><svg class="ico"><use href="#ico-mail"></use></svg><div><b>אימייל</b>uandi.11589@gmail.com</div></div>
+      <div class="ci-item"><svg class="ico"><use href="#ico-clock"></use></svg><div><b>שעות מענה</b>א׳–ה׳, 09:00–18:00</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="process" id="process">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>איך <span class="grad-text">עובדים</span> יחד</h2>
+      <p class="process-lead">שני מסלולי עבודה, לפי סוג הפרויקט.</p>
+    </div>
+  </div>
+  <div class="process-split" id="process-split">
+    <div class="process-col process-col--dark" id="process-col-branding">
+      <div class="process-col-inner">
+        <div class="process-col-head reveal">
+          <span class="process-col-icon"><svg class="ico"><use href="#ico-palette"></use></svg></span>
+          <h3>תהליך מיתוג</h3>
+        </div>
+        <div class="process-step reveal" data-num="01">
+          <h4>בריף ומחקר</h4>
+          <p>הבנת המותג, השוק והמתחרים לעומק: הבסיס שעליו נבנה כל השאר.</p>
+        </div>
+        <div class="process-step reveal" data-num="02">
+          <h4>אסטרטגיית מותג</h4>
+          <p>הגדרת ערכים, טון קול ומיצוב ברור מול המתחרים בשוק.</p>
+        </div>
+        <div class="process-step reveal" data-num="03">
+          <h4>עיצוב זהות חזותית</h4>
+          <p>לוגו, פלטת צבעים, טיפוגרפיה ושפה גרפית עקבית לכל נקודות המגע.</p>
+        </div>
+        <div class="process-step reveal" data-num="04">
+          <h4>מדריך מותג ומסירה</h4>
+          <p>קובצי מותג מוכנים לשימוש בכל פלטפורמה ולכל ספק.</p>
+        </div>
+      </div>
+    </div>
+    <div class="process-col process-col--light" id="process-col-uxui">
+      <div class="process-col-inner">
+        <div class="process-col-head reveal">
+          <span class="process-col-icon"><svg class="ico"><use href="#ico-monitor"></use></svg></span>
+          <h3>תהליך UX/UI</h3>
+        </div>
+        <div class="process-step reveal" data-num="01">
+          <h4>גילוי ואיסוף מידע</h4>
+          <p>הכרות עם העסק, המתחרים והקהל היעד, מכל זווית אפשרית.</p>
+        </div>
+        <div class="process-step reveal" data-num="02">
+          <h4>אפיון ומבנה</h4>
+          <p>בניית מפת אתר, זרימת משתמש וארכיטקטורת מידע ברורה ופשוטה.</p>
+        </div>
+        <div class="process-step reveal" data-num="03">
+          <h4>עיצוב UX/UI</h4>
+          <p>ווייר-פריימים, ממשקים ועיצוב סופי מוקפד בכל הרזולוציות.</p>
+        </div>
+        <div class="process-step reveal" data-num="04">
+          <h4>פיתוח והשקה</h4>
+          <p>ליווי הפיתוח, בדיקות ואישור לפני עלייה לאוויר, עם כל התווים על ה-i.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="why-us" id="why">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>מה <span class="grad-text">מייחד</span> אותנו</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-card reveal">
+        <div class="why-icon"><svg class="ico ico-lg"><use href="#ico-people"></use></svg></div>
+        <h3>גישה אישית</h3>
+        <p>כל פרויקט מקבל תשומת לב מלאה, בלי תבניות מוכנות ובלי קיצורי דרך.</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon"><svg class="ico ico-lg"><use href="#ico-target"></use></svg></div>
+        <h3>עיצוב מונחה תוצאות</h3>
+        <p>כל החלטה עיצובית נשענת על מטרה עסקית ברורה, לא רק על אסתטיקה.</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon"><svg class="ico ico-lg"><use href="#ico-eye"></use></svg></div>
+        <h3>שקיפות לאורך הדרך</h3>
+        <p>עדכונים שוטפים ותקשורת פתוחה בכל שלב, מהבריף ועד המסירה.</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon"><svg class="ico ico-lg"><use href="#ico-refresh"></use></svg></div>
+        <h3>זמינות גם אחרי המסירה</h3>
+        <p>נשארים זמינים גם אחרי ההשקה, לא נעלמים ברגע שהפרויקט נגמר.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="final-cta" id="contact">
+  <div class="wrap contact-grid">
+    <div class="contact-info reveal">
+      <h2>מוכן <span class="grad-text">לצמצם את העומס</span> על מחלקת השיווק?</h2>
+      <p>שיחת היכרות קצרה<br>בלי התחייבות<br>כדי להבין אם ה־Design Partner מתאים לך.</p>
+      <div class="cta-buttons">
+        <a href="https://wa.me/972555711589?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A9%D7%9E%D7%95%D7%A2%20%D7%A2%D7%9C%20%D7%94%D7%A9%D7%99%D7%A8%D7%95%D7%AA%D7%99%D7%9D%20%D7%A9%D7%9C%D7%9A" class="btn-primary" target="_blank" rel="noopener"><svg class="ico"><use href="#ico-whatsapp"></use></svg>שליחת הודעה ב־WhatsApp</a>
+        <a href="tel:+972583212810" class="btn-ghost"><svg class="ico"><use href="#ico-phone"></use></svg>חיוג ישיר</a>
+      </div>
+      <div class="contact-lines">
+        <div class="ci-item"><svg class="ico"><use href="#ico-phone"></use></svg><div><b>טלפון</b>058-321-2810</div></div>
+        <div class="ci-item"><svg class="ico"><use href="#ico-whatsapp"></use></svg><div><b>וואטסאפ</b>055-571-1589</div></div>
+        <div class="ci-item"><svg class="ico"><use href="#ico-mail"></use></svg><div><b>אימייל</b>uandi.11589@gmail.com</div></div>
+        <div class="ci-item"><svg class="ico"><use href="#ico-clock"></use></svg><div><b>שעות מענה</b>א׳–ה׳, 09:00–18:00</div></div>
+      </div>
+    </div>
+    <form class="contact-form reveal" id="contact-form" action="https://formsubmit.co/uandi.11589@gmail.com" method="POST">
+      <input type="hidden" name="_subject" value="פנייה חדשה מאתר U&I Studio">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
+      <div class="form-row">
+        <label for="name">שם מלא</label>
+        <input type="text" id="name" name="name" required placeholder="איך קוראים לך?">
+      </div>
+      <div class="form-row">
+        <label for="email">אימייל</label>
+        <input type="email" id="email" name="email" required placeholder="you@example.com">
+      </div>
+      <div class="form-row">
+        <label for="phone">טלפון</label>
+        <input type="tel" id="phone" name="phone" placeholder="050-1234567">
+      </div>
+      <div class="form-row">
+        <label for="message">ספר לנו על הפרויקט</label>
+        <textarea id="message" name="message" rows="4" required placeholder="כמה מילים על מה שאתה צריך..."></textarea>
+      </div>
+      <button type="submit" class="btn-primary form-submit"><svg class="ico"><use href="#ico-send"></use></svg>שליחה</button>
+      <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-logo"><div class="logo-badge"><img src="assets/logo.png" alt="U&I Studio"></div></div>
+    © U&I Studio — כל הזכויות שמורות
+  </div>
+</footer>
+
+<script>
+  const backToTop = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => {
+    backToTop.classList.toggle('visible', window.scrollY > 500);
+  });
+
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+
+  const processSplit = document.getElementById('process-split');
+  const colUxui = document.getElementById('process-col-uxui');
+  colUxui?.addEventListener('mouseenter', () => processSplit.classList.add('swap'));
+  colUxui?.addEventListener('mouseleave', () => processSplit.classList.remove('swap'));
+
+  const contactForm = document.getElementById('contact-form');
+  const formStatus = document.getElementById('form-status');
+  contactForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const submitBtn = contactForm.querySelector('.form-submit');
+    submitBtn.disabled = true;
+    formStatus.style.color = 'var(--gold-dim)';
+    formStatus.textContent = 'שולח...';
+    try {
+      const res = await fetch('https://formsubmit.co/ajax/uandi.11589@gmail.com', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(contactForm)
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || data.success === 'false' || data.success === false) {
+        throw new Error(data.message || 'send failed');
+      }
+      formStatus.textContent = 'תודה! ההודעה נשלחה בהצלחה, נחזור אליך בהקדם.';
+      contactForm.reset();
+    } catch (err) {
+      formStatus.style.color = '#c0392b';
+      formStatus.textContent = 'משהו השתבש. אפשר לנסות שוב או לפנות ישירות בוואטסאפ.';
+    } finally {
+      submitBtn.disabled = false;
+    }
+  });
+</script>
+
+</body>
+</html>
